@@ -19,7 +19,7 @@ namespace SKTools
 
     public class PlotLayout
     {
-        public string Title { get; set; }
+        public string Title { get; set; } 
         // COORDINATES
         public float X1 { get; set; }
         public float Y1 { get; set; }
