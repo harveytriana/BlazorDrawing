@@ -6,7 +6,6 @@
 // https://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit
 // =====================================================================
 using SkiaSharp;
-using System;
 
 namespace SKTools
 {

@@ -1,5 +1,4 @@
-﻿// blazorspread.net
-'use strict';
+﻿'use strict';
 
 export function drawMesh() {
     const canvas = document.getElementById('canvas');
