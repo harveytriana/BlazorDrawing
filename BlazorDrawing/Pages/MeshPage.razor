@@ -70,8 +70,6 @@
 
     void OnPointerMove(MouseEventArgs e)
     {
-        float x = (float)e.OffsetX;
-        float y = (float)e.OffsetY;
-        xySK = $"Pointer: ({x}, {y})";
+        xySK = $"Pointer: ({e.OffsetX}, {e.OffsetY})";
     }
 }

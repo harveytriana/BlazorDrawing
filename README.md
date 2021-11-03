@@ -6,8 +6,8 @@ Blazor continues to make great strides in the right direction. With version 6 we
 
 Details in the post:
 
-- English: https://www.blazorspread.net/blogview/79
-- Spanish: https://www.blazorspread.net/blogview/78
+- English: https://www.blazorspread.net/blogview/82
+- Spanish: https://www.blazorspread.net/blogview/81
 
 *If this code is useful to you, I appreciate giving a star to this repository.*
 
