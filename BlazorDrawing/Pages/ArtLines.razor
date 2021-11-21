@@ -1,0 +1,78 @@
+﻿@page "/art-lines"
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@using System.Threading
+@implements IDisposable
+
+<style>
+    .size {
+        width: 500px;
+        height: 300px;
+    }
+</style>
+
+<PageTitle>Native Skia graphics library</PageTitle>
+
+<h2>Native Drawing</h2>
+<hr />
+<p>Native Skia graphics library sample.</p>
+
+<SKCanvasView OnPaintSurface="OnPaintSurface"
+              @ref="canvasView"
+              @onmousemove="OnPointerMove"
+              class="size" />
+<p class="xy-label">@xySK</p>
+
+@code {
+    string xySK = string.Empty;
+    readonly Random rand = new();
+    Timer timer;
+    readonly int lineCount = 32;
+    SKCanvasView canvasView;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(_ => {
+            canvasView.Invalidate();
+        }, null, 0, 2500);
+    }
+
+    void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+        canvas.Clear();
+        for (int i = 0; i < lineCount; i++) {
+            float lineWidth = rand.Next(1, 10);
+            var lineColor = new SKColor(
+                    red: (byte)rand.Next(255),
+                    green: (byte)rand.Next(255),
+                    blue: (byte)rand.Next(255),
+                    alpha: (byte)rand.Next(255));
+
+            var pen = new SKPaint {
+                    Color = lineColor,
+                    StrokeWidth = lineWidth,
+                    IsAntialias = true,
+                    Style = SKPaintStyle.Stroke
+                };
+
+            int x1 = rand.Next(e.Info.Width);
+            int y1 = rand.Next(e.Info.Height);
+            int x2 = rand.Next(e.Info.Width);
+            int y2 = rand.Next(e.Info.Height);
+            canvas.DrawLine(x1, y1, x2, y2, pen);
+        }
+    }
+
+    void OnPointerMove(MouseEventArgs e)
+    {
+        float x = (float)e.OffsetX;
+        float y = (float)e.OffsetY;
+        xySK = $"Pointer: ({x}, {y})";
+    }
+
+    void IDisposable.Dispose()
+    {
+        timer?.Dispose();
+    }
+}
