@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDrawing", "BlazorDrawing\BlazorDrawing.csproj", "{964532B3-92C8-4171-A439-ECD03957665A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SKTools", "SKTools\SKTools.csproj", "{FE557091-201A-424F-99AD-B1657DA5267D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SKTools", "SKTools\SKTools.csproj", "{FE557091-201A-424F-99AD-B1657DA5267D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
