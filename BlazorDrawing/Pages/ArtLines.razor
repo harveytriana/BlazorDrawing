@@ -25,14 +25,14 @@
 @code {
     string xySK = string.Empty;
     readonly Random rand = new();
-    Timer timer;
+    Timer? timer;
     readonly int lineCount = 32;
-    SKCanvasView canvasView;
+    SKCanvasView? canvasView;
 
     protected override void OnInitialized()
     {
         timer = new Timer(_ => {
-            canvasView.Invalidate();
+            canvasView!.Invalidate();
         }, null, 0, 1000);
     }
 
