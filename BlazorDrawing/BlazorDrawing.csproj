@@ -7,6 +7,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+		<PackageReference Include="SkiaSharp.Views.Blazor" Version="2.88.0-preview.152" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\SKTools\SKTools.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resorces\arial.ttf" />
 	  <None Remove="Resorces\Consolas.ttf" />
 	  <None Remove="Resorces\Freescpt.ttf" />
@@ -20,16 +30,6 @@
 	  <EmbeddedResource Include="Resorces\Freescpt.ttf" />
 	  <EmbeddedResource Include="Resorces\OldLondon.ttf" />
 	  <EmbeddedResource Include="Resorces\Times.ttf" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
-		<PackageReference Include="SkiaSharp.Views.Blazor" Version="2.88.0-preview.152" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\SKTools\SKTools.csproj" />
 	</ItemGroup>
 
 </Project>
