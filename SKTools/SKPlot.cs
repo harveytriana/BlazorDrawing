@@ -1,5 +1,5 @@
 ﻿/* ===============================
- * VISIONARY S.A.S.
+ * Experimental works
  * harveytriana@gmail.com
  * =============================== 
 */
@@ -107,7 +107,7 @@ public class SKPlot
             StrokeWidth = strokeWidth
         };
 
-        var splitLine = SmootherLine.CreateSpline(points.ToArray());
+        var splitLine = SplineBuilder.BezierPath(points.ToArray());
         canvas.DrawPath(splitLine, pen);
     }
 }
