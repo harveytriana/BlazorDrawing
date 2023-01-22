@@ -1,0 +1,79 @@
+﻿@page "/plotPage"
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@using SKTools;
+
+<!-- BlazorSpread.net -->
+
+<PageTitle>Using SkiaSharp library with native dependencies</PageTitle>
+
+<h2>Navive Drawing</h2>
+<hr />
+<p>Using libraries with native dependencies.</p>
+<br />
+<h5>Sinusoidal functions</h5>
+<SKCanvasView OnPaintSurface="PaintSurface1" style="width:600px;height:200px;" />
+<br /><br />
+<h5>Damped Sin Wave</h5>
+<SKCanvasView OnPaintSurface="PaintSurface2" style="width:600px;height:200px;" />
+
+@code {
+    PlotLayout? _SinusoidalLayout;
+    PlotLayout? _DampedSinWaveLayout;
+
+    void PaintSurface1(SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+
+        _SinusoidalLayout = new PlotLayout {
+                // X
+                Width = 600,
+                X1 = -6,
+                X2 = 6,
+                TicksX = 2,
+                MeshX = 0.5F,
+                // Y
+                Height = 200,
+                Y1 = 1.5F,
+                Y2 = -1.5F,
+                TicksY = 0.5F,
+                MeshY = 0.25F,
+                // Skin (default is Light)
+                Skin = Skin.Light
+            };
+        var skPlot = new SKPlot(_SinusoidalLayout);
+
+        float wave1(float x) => (float)(1.25 * Math.Sin(1.5 * x));
+        float wave2(float x) => (float)(0.50 * Math.Sin(1.5 * x));
+
+        skPlot.DrawGrid(canvas);
+        skPlot.DrawFunction(canvas, wave1, false, 2, "556B2F");
+        skPlot.DrawFunction(canvas, wave2, false, 2, "6784ae");
+    }
+
+    void PaintSurface2(SKPaintSurfaceEventArgs e)
+    {
+        var canvas = e.Surface.Canvas;
+
+        _DampedSinWaveLayout = new PlotLayout {
+                Width = 600,
+                Height = 200,
+                // X
+                X1 = 0.0F,
+                X2 = 6.0F,
+                MeshX = 0.25F,
+                TicksX = 1,
+                // Y
+                Y1 = 1.0F,
+                Y2 = -1.0F,
+                MeshY = 0.25F,
+                TicksY = 0.5F,
+            };
+        var skPlot = new SKPlot(_DampedSinWaveLayout);
+
+        float dampedSineWave(float x) => (float)(Math.Exp(-0.5 * x) * Math.Sin(2.0 * Math.PI * x));
+
+        skPlot.DrawGrid(canvas);
+        skPlot.DrawFunction(canvas, dampedSineWave, false, 2, "FF5733");
+    }
+}

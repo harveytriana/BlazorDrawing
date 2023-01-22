@@ -1,0 +1,74 @@
+﻿@page "/mesh-sample"
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@inject IJSRuntime jsRunTime
+
+<!-- BlazorSpread.net -->
+
+<PageTitle>Native Skia graphics library</PageTitle>
+
+<h2>Native Drawing</h2>
+<hr />
+<p>Native Skia graphics library sample.</p>
+
+<div class="row">
+    <div class="col">
+        <h5>Canvas - JavaScript</h5>
+        <canvas id="canvas" width="270" height="270"></canvas>
+        <p class="xy-label" id="xy"></p>
+    </div>
+    <div class="col">
+        <h5>SkiaSharp - C#</h5>
+        <SKCanvasView OnPaintSurface="PaintSurface"
+                      @onmousemove="OnPointerMove"
+                      style="width:270px;height:270px;" />
+        <p class="xy-label">@xySK</p>
+    </div>
+</div>
+
+@code {
+    string xySK = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var module = await jsRunTime.InvokeAsync<IJSObjectReference>("import", "./js/mesh.js");
+        await module.InvokeVoidAsync("drawMesh");
+    }
+
+    void PaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        const int SIZE = 270;
+
+        var canvas = e.Surface.Canvas;
+
+        using SKPaint penMesh = new() {
+                Color = SKColors.Silver,
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke
+            };
+        using SKPaint penTick = new() {
+                Color = SKColors.Gray,
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke
+            };
+
+        float size = SIZE, shift = 0;
+
+        canvas.Clear(SKColors.White);
+        while (shift <= size) {
+            canvas.DrawLine(shift, size, size, size - shift, (shift % 40F == 0) ? penTick : penMesh);
+            shift += 10F;
+        }
+
+        // CODA
+        canvas.DrawRect(0.5F, 0.5F, size - 0.5F, size - 0.5F, penMesh);
+        // OR
+        // penMesh.IsAntialias = false;
+        // canvas.DrawRect(0, 0, size - 1, size - 1, penMesh);
+    }
+
+    void OnPointerMove(MouseEventArgs e)
+    {
+        xySK = $"Pointer: ({e.OffsetX}, {e.OffsetY})";
+    }
+}

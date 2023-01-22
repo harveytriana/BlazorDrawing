@@ -1,0 +1,79 @@
+﻿@page "/art-lines"
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@using System.Threading
+@implements IDisposable
+
+<style>
+    .size {
+        width: 100%;
+        height: 70%;
+        border: 1px solid rgb(220,220,220);
+    }
+</style>
+
+<h2>Native Drawing</h2>
+<hr />
+<p>Unattended drawing through a reference</p>
+
+<SKCanvasView OnPaintSurface="OnPaintSurface"
+              @ref="canvasView"
+              @onmousemove="OnPointerMove"
+              class="size" />
+<p class="xy-label">@xySK</p>
+
+@code {
+    string xySK = string.Empty;
+    readonly Random rand = new();
+    Timer? timer;
+    readonly int lineCount = 32;
+    SKCanvasView? canvasView;
+    SKImageInfo _info;
+
+    byte randomByte => (byte)rand.Next(255);
+    float randomX => rand.Next(_info.Width);
+    float randomY => rand.Next(_info.Height);
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(_ => {
+            canvasView!.Invalidate();
+        }, null, 0, 250);
+    }
+
+    void OnPaintSurface(SKPaintSurfaceEventArgs e)
+    {
+        _info = e.Info;
+
+        var canvas = e.Surface.Canvas;
+        canvas.Clear();
+
+        using var pen = new SKPaint {
+                IsAntialias = true,
+                Style = SKPaintStyle.Stroke
+            };
+
+        for (int i = 0; i < lineCount; i++) {
+            pen.Color = new SKColor(
+                    red: randomByte,
+                    green: randomByte,
+                    blue: randomByte,
+                    alpha: randomByte);
+            pen.StrokeWidth = rand.Next(1, 10);
+
+            canvas.DrawLine(randomX, randomY, randomX, randomY, pen);
+        }
+    }
+
+    void OnPointerMove(MouseEventArgs e)
+    {
+        float x = (float)e.OffsetX;
+        float y = (float)e.OffsetY;
+        xySK = $"Pointer: ({x}, {y})";
+    }
+
+    void IDisposable.Dispose()
+    {
+        timer?.Dispose();
+    }
+}
